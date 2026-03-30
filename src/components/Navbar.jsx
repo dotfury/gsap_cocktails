@@ -1,10 +1,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { registerPlugin } from "gsap";
 
 import { navLinks } from "../constants";
 
-registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP);
 
 const Navbar = () => {
   useGSAP(() => {
