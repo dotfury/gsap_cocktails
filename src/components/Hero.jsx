@@ -6,10 +6,10 @@ import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Hero = () => {
-  gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
   const videoRef = useRef(null);
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
   
+  gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
   useGSAP(() => {
     const heroSplit = new SplitText('.title', { type: 'chars, words' });
     const paragraphSplit = new SplitText('.subtitle', { type: 'lines' });
@@ -87,7 +87,7 @@ const Hero = () => {
       </section>
 
       <div className="video absolute inset-0">
-        <video ref={videoRef} src="/videos/output.mp4" muted playsinline preload="auto" />
+        <video ref={videoRef} src="/videos/output.mp4" muted playsInline preload="auto" />
       </div>
     </>
   )
