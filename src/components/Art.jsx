@@ -1,7 +1,45 @@
-import React from 'react'
+import { useMediaQuery } from 'react-responsive'
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 import { featureLists, goodLists } from '../constants'
 
 const Art = () => {
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  useGSAP(() => {
+    const start = isMobile ? 'top 20%' : 'top top';
+    const maskTimeline = gsap.timeline({
+      defaults: {
+        ease: 'back'
+      },
+      scrollTrigger: {
+        trigger: '#art',
+        start,
+        end: 'bottom center',
+        scrub: 1.5,
+        pin: true
+      }
+    });
+
+    maskTimeline
+      .to('.will-fade', {
+        opacity: 0,
+        stagger: 0.2,
+      })
+      .to('.masked-img', {
+        scale: 1.3,
+        maskPosition: 'center',
+        maskSize: '400%',
+      })
+      .to('#masked-content', {
+        opacity: 1,
+        duration: 1,
+      })
+  }, []);
+
   return (
     <div id="art">
       <div className="container mx-auto h-full pt-20">
@@ -30,7 +68,8 @@ const Art = () => {
             ))}
           </ul>
         </div>
-
+      </div>
+      
         <div className="masked-container">
           <h2 className="will-fade">Sip-Worthy Perfection</h2>
           <div id="masked-content">
@@ -38,7 +77,6 @@ const Art = () => {
             <p>This isn't just a drink. It's a carefully crafted moment made just for you.</p>
           </div>
         </div>
-      </div>
     </div>
   )
 }
