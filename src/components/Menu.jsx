@@ -1,10 +1,32 @@
 'use client';
-import { useState } from "react";
+import { useState, useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 import { sliderLists as allCocktails } from "../constants"
 
 const Menu = () => {
+  const contentRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useGSAP(() => {
+    gsap
+    .fromTo(
+      '#title',
+      { opacity: 0 },
+      { opacity: 1, duration: 1 }
+    );
+    gsap.fromTo(
+      '.cocktail img',
+      { opacity: 0, xPercent: -100 },
+      { xPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut' }
+    );
+    gsap.fromTo(
+      '.details h2, .details p',
+      { yPercent: 100, opacity: 0 },
+      { yPercent: 0, opacity: 100, ease: 'power1.inOut' }
+    );
+  }, [currentIndex]);
 
   const totalCocktails = allCocktails.length;
   const goToSlide = (index) => {
@@ -60,6 +82,18 @@ const Menu = () => {
 
         <div className="cocktail">
           <img src={currentCocktail.image} alt="" className="object-contain" />
+        </div>
+
+        <div className="recipe">
+          <div ref={contentRef} className="info">
+            <p>Recipe for:</p>
+            <p id="title">{currentCocktail.name}</p>
+          </div>
+
+          <div className="details">
+            <h2>{currentCocktail.title}</h2>
+            <p>{currentCocktail.description}</p>
+          </div>
         </div>
       </div>
     </section>
